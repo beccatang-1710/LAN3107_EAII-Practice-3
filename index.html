@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAN3107 EAII Practice 3 — Possible Response</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #c7d8ee;
+  color: #333;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  background:
+    radial-gradient(circle at 12% 25%, rgba(255,255,255,0.35) 4px, transparent 5px),
+    radial-gradient(circle at 30% 70%, rgba(255,255,255,0.3) 6px, transparent 7px),
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,0.25) 8px, transparent 9px),
+    radial-gradient(circle at 70% 55%, rgba(255,255,255,0.35) 4px, transparent 5px),
+    radial-gradient(circle at 85% 30%, rgba(255,255,255,0.3) 5px, transparent 6px),
+    radial-gradient(circle at 95% 75%, rgba(255,255,255,0.35) 6px, transparent 7px),
+    radial-gradient(circle at 20% 90%, rgba(255,255,255,0.25) 7px, transparent 8px),
+    radial-gradient(circle at 60% 90%, rgba(255,255,255,0.3) 5px, transparent 6px);
+  animation: bubbles 18s ease-in-out infinite alternate;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.06;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cpath d='M20 120 C60 30 140 30 180 120' fill='none' stroke='%232c4a8f' stroke-width='2'/%3E%3Cpath d='M40 150 C80 70 140 70 170 150' fill='none' stroke='%232c4a8f' stroke-width='1.5'/%3E%3Cpath d='M60 180 C90 110 130 110 155 180' fill='none' stroke='%232c4a8f' stroke-width='1'/%3E%3C/svg%3E") repeat;
+}
+
+@keyframes bubbles {
+  0% { transform: translateY(0); opacity: 0.5; }
+  100% { transform: translateY(-32px); opacity: 1; }
+}
+
+.banner {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+  animation: kenburns 10s ease-in-out infinite alternate;
+  transform-origin: center center;
+  clip-path: inset(0 0 12% 0);
+}
+
+@keyframes kenburns {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+.page-header {
+  text-align: center;
+  padding: 20px 20px 0;
+  background: white;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.page-header h1 { font-size: 24px; color: #1f3865; margin-bottom: 4px; }
+.page-header p { font-size: 16px; color: #2c4a8f; margin-bottom: 4px; }
+.page-header .presented-by { font-size: 14px; color: #5573b8; font-style: italic; margin-top: 6px; }
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.tabs { display: flex; gap: 0; margin-bottom: 0; flex-wrap: wrap; }
+
+.tab-btn {
+  padding: 14px 26px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  background: #bed0ea;
+  color: #4a5876;
+  border-radius: 10px 10px 0 0;
+  transition: background 0.2s, color 0.2s;
+}
+
+.tab-btn:hover { background: #adc2e2; }
+.tab-btn.active { background: white; color: #2c4a8f; }
+
+.tab-content {
+  display: none;
+  background: white;
+  padding: 30px;
+  border-radius: 0 10px 10px 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  line-height: 1.7;
+}
+
+.tab-content.active { display: block; }
+
+h1 { font-size: 22px; color: #1c3865; margin-bottom: 6px; }
+h2 { font-size: 18px; color: #2c4a8f; margin: 20px 0 10px; }
+h3 { font-size: 16px; color: #3c5caa; margin: 16px 0 8px; }
+
+.task-section { margin-bottom: 30px; }
+
+.agenda-box {
+  background: #eef4fd;
+  border-left: 4px solid #2c4a8f;
+  padding: 16px 22px;
+  margin: 14px 0;
+  border-radius: 0 8px 8px 0;
+  color: #33415e;
+}
+
+.agenda-box ul { padding-left: 20px; margin: 8px 0; }
+.agenda-box li { margin-bottom: 6px; }
+
+.meeting-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #f4f8ff;
+  padding: 14px 18px;
+  border-radius: 8px;
+  border: 1px solid #dbe7f7;
+  margin: 10px 0;
+  color: #2c4a8f;
+  font-weight: 600;
+}
+
+.meeting-meta .m-university {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1c3865;
+}
+
+/* ---- Possible Response / dialogue ---- */
+.exchange {
+  margin-bottom: 14px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #e1eaf7;
+  background: #fbfdff;
+}
+
+.exchange .meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #1c3865;
+}
+
+.exchange .speaker {
+  background: #2c4a8f;
+  color: white;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.exchange .function { font-size: 12px; color: #5573b8; font-style: italic; font-weight: 500; }
+
+.exchange .text { font-size: 16px; color: #333; margin-top: 2px; line-height: 1.9; }
+
+.exchange .lang {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed #cfe0c2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.exchange .lang .tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: #2f6b3a;
+  background: #eaf5e7;
+  border: 1px solid #c9e3c2;
+  border-radius: 10px;
+  padding: 2px 9px;
+  line-height: 1.5;
+}
+
+.exchange .lang .tag .xv {
+  color: #c0392b;
+}
+
+.exchange .lang .tag .ok {
+  color: #2f6b3a;
+}
+
+/* ---- Language-item highlighting table ---- */
+.dialogue-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.dialogue-table th {
+  background: #2c4a8f; color: #fff; padding: 10px 12px; text-align: left;
+  font-size: 13px; font-weight: 600;
+}
+.dialogue-table td { border: 1px solid #dbe7f7; padding: 10px 12px; vertical-align: top; }
+.dialogue-table tbody tr:nth-child(even) td { background: #f7fafd; }
+.c-stu { width: 66px; }
+.c-script { width: 50%; line-height: 1.9; }
+.c-exp { width: 30%; }
+.c-fn { width: 20%; font-style: italic; color: #5573b8; font-size: 12px; line-height: 1.6; }
+.muted { color: #aab7cc; }
+
+.lang-hl {
+  cursor: help; padding: 0 2px; border-radius: 3px; font-weight: 600;
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.lang-hl.m { background: #dbeafe; color: #1e40af; border-bottom: 2px solid #3b82f6; }
+.lang-hl.c { background: #fef3c7; color: #92400e; border-bottom: 2px solid #f59e0b; }
+.lang-hl.h { background: #dcfce7; color: #166534; border-bottom: 2px solid #22c55e; }
+.lang-hl.g { background: #f3e8ff; color: #6b21a8; border-bottom: 2px solid #a855f7; }
+.lang-hl.r { background: #ffedd5; color: #9a3412; border-bottom: 2px solid #f97316; }
+.lang-hl.n { background: #ccfbf1; color: #115e59; border-bottom: 2px solid #14b8a6; }
+
+.exp-item {
+  display: inline-block; background: #eaf5e7; color: #2f6b3a; border: 1px solid #c9e3c2;
+  border-radius: 10px; padding: 2px 8px; font-size: 11px; font-weight: 600; margin: 2px;
+}
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; align-items: center; }
+.legend .lbl { font-size: 13px; font-weight: 700; color: #33415e; margin-right: 4px; }
+.legend .chip { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 10px; }
+.chip.m { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+.chip.c { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+.chip.h { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+.chip.g { background: #f3e8ff; color: #6b21a8; border: 1px solid #d8b4fe; }
+.chip.r { background: #ffedd5; color: #9a3412; border: 1px solid #fdba74; }
+.chip.n { background: #ccfbf1; color: #115e59; border: 1px solid #5eead4; }
+
+.cn-translation {
+  display: none;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #fff8f0;
+  border-left: 3px solid #e8a87c;
+  border-radius: 0 6px 6px 0;
+  font-size: 14px;
+  color: #8b5a2b;
+  line-height: 1.6;
+}
+
+.cn-active .cn-translation { display: block; }
+
+.cn-toggle-wrap { text-align: right; margin-bottom: 10px; }
+
+.cn-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c4a8f;
+  user-select: none;
+}
+
+.cn-toggle input {
+  width: 40px;
+  height: 22px;
+  appearance: none;
+  background: #bed0ea;
+  border-radius: 11px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.cn-toggle input::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.2s;
+}
+
+.cn-toggle input:checked { background: #2c4a8f; }
+.cn-toggle input:checked::before { transform: translateX(18px); }
+
+.video-box { max-width: 1000px; }
+.video-box video {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  display: block;
+  background: #000;
+  object-fit: contain;
+}
+
+.video-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 320px;
+  border: 2px dashed #9db7dd;
+  border-radius: 12px;
+  background: #f4f8ff;
+  color: #5573b8;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.feature-box {
+  background: #f4f8ff;
+  border: 1px solid #d4e2f5;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 12px 0;
+  color: #33415e;
+}
+
+.feature-box ul { padding-left: 20px; margin: 8px 0; }
+.feature-box li { margin-bottom: 6px; }
+
+/* ---- Audio player ---- */
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 14px 0 10px;
+}
+.play-all-btn {
+  background: #2c4a8f; color: #fff; border: none; border-radius: 8px;
+  padding: 8px 18px; font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: background 0.2s;
+}
+.play-all-btn:hover { background: #1c3865; }
+.pause-btn {
+  background: #d4a043; color: #fff; border: none; border-radius: 8px;
+  padding: 8px 14px; font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.pause-btn:hover { background: #b8892e; }
+.stop-btn {
+  background: #c0392b; color: #fff; border: none; border-radius: 8px;
+  padding: 8px 14px; font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.stop-btn:hover { background: #a93226; }
+.speed-label { font-size: 13px; color: #5573b8; margin-left: auto; }
+.speed-select {
+  font-size: 13px; padding: 4px 8px; border: 1px solid #d4e2f5;
+  border-radius: 6px; background: #f4f8ff; color: #33415e; cursor: pointer;
+}
+.now-playing {
+  background: linear-gradient(135deg, #2c4a8f 0%, #5573b8 100%);
+  border-radius: 12px; padding: 12px 18px; margin-bottom: 16px;
+  display: none; animation: fadeUp 0.3s ease both;
+}
+.now-playing.active { display: block; }
+.now-playing-label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.15em; color: rgba(255,255,255,0.65); margin-bottom: 5px;
+}
+.now-playing-text { font-size: 16px; color: #fff; line-height: 1.5; }
+
+.dialogue-table tr.script-row.active { background: #e8f0e0; box-shadow: inset 4px 0 0 #2c4a8f; }
+
+.speaker-btn {
+  width: 42px; height: 42px; border-radius: 10px; border: none; cursor: pointer;
+  font-weight: 700; font-size: 15px; color: #fff; transition: all 0.2s ease;
+  flex-shrink: 0; position: relative; overflow: hidden;
+}
+.speaker-btn:hover { opacity: 0.85; }
+.speaker-btn:active { transform: scale(0.93); }
+.speaker-btn.role-A { background: #5c8260; }
+.speaker-btn.role-B { background: #8c7355; }
+.speaker-btn.role-C { background: #4a6c8f; }
+.speaker-btn.role-D { background: #8a5a3a; }
+.speaker-btn.role-ALL {
+  background: linear-gradient(135deg, #7a9e7e, #4a6c8f);
+  font-size: 11px; letter-spacing: 0.05em;
+}
+.audio-pulse {
+  display: none; width: 8px; height: 8px; border-radius: 50%;
+  background: #f1c40f; position: absolute; top: 4px; right: 4px;
+  animation: pulse 1s infinite;
+}
+.speaker-btn.playing .audio-pulse { display: block; }
+
+.word-wrap { display: inline; }
+.word-wrap .word {
+  display: inline-block; position: relative; transition: color 0.15s; cursor: pointer;
+}
+.word-wrap .word:hover { background: rgba(122,158,126,0.15); border-radius: 4px; }
+.word-wrap .word.speaking { color: #c0392b; font-weight: 700; }
+.word-wrap .word.active { color: #2d6a4f; font-weight: 700; }
+.word-wrap .word.active::after {
+  content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+  height: 3px; background: #f1c40f; border-radius: 2px;
+}
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <img src="banner.png" alt="Banner">
+</div>
+
+<div class="page-header">
+  <h1>Essential Workplace Communication: Effective Oral Interaction (LAN3107)</h1>
+  <p>EAII Practice 3 — Meetings: Jolly Juicy Business Expansion</p>
+  <p class="presented-by">Presented by Rebecca Tang</p>
+</div>
+
+<div class="container">
+  <div class="cn-toggle-wrap">
+    <label class="cn-toggle">
+      <input type="checkbox" onchange="toggleAllCN(this.checked)">
+      <span>中文翻译</span>
+    </label>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(0)">TAB 1 — Task Overview</button>
+    <button class="tab-btn" onclick="switchTab(1)">TAB 2 — Possible Response</button>
+    <button class="tab-btn" onclick="switchTab(2)">TAB 3 — Video</button>
+  </div>
+
+  <!-- ============ TAB 1: TASK OVERVIEW ============ -->
+  <div class="tab-content active" id="tab-0">
+    <h1 data-cn="任務概覽">Task Overview</h1>
+
+    <div class="task-section">
+      <p data-cn="你是香港一間飲品店 Jolly Juicy 市場營銷團隊的成員。你和同事將舉行會議，討論擴展業務的計劃。你應該：">
+        You are on the marketing team of <strong>Jolly Juicy</strong>, a beverage shop in Hong Kong.
+        You and your colleagues are going to hold a meeting to discuss plans to expand the business. You should:
+      </p>
+      <ul style="padding-left:20px; margin:10px 0;">
+        <li data-cn="就各議程項目提出你自己的建議">give your own suggestion(s) on the agenda items</li>
+        <li data-cn="解釋你提出建議的理由">explain the reason(s) for your suggestion(s)</li>
+        <li data-cn="積極聆聽，並透過表達喜好、同意或不同意來回應他人的建議">listen actively and respond to others' suggestions by expressing preferences, agreement, or disagreement</li>
+        <li data-cn="就議程第2至4項達成共識">reach a consensus on agenda items 2–4</li>
+      </ul>
+      <p data-cn="作為一組，你們必須涵蓋以下所有議程項目。">As a group, you must cover all the agenda items below.</p>
+    </div>
+
+    <div class="task-section" style="text-align:center;">
+      <h2 data-cn="會議詳情">Meeting Details</h2>
+      <div class="meeting-meta">
+        <span class="m-university">Jolly Juicy</span>
+        <span data-cn="市場營銷團隊">Marketing Team</span>
+        <span data-cn="12月16日20--年 下午2時30分 會議室">16 December 20-- at 2:30 pm in the Meeting Room</span>
+      </div>
+    </div>
+
+    <div class="task-section">
+      <h3 data-cn="議程">Agenda</h3>
+      <div class="agenda-box">
+        <ol style="padding-left:22px;">
+          <li data-cn="會議開始">Open the meeting</li>
+          <li data-cn="飲品單上的新飲品">New beverages on the drink list</li>
+          <li>
+            <span style="font-weight:600;" data-cn="推廣新優惠的策略">Tactics for promoting the new offer</span>
+            <p style="margin-top:4px; font-weight:600; color:#2c4a8f;" data-cn="可能的策略：">Possible tactics:</p>
+            <ul style="padding-left:20px;">
+              <li data-cn="代言人">Spokesperson</li>
+              <li data-cn="網上平台">Online platforms</li>
+              <li data-cn="宣傳攤位">Promotional booths</li>
+              <li data-cn="免費試飲">Free trial</li>
+            </ul>
+          </li>
+          <li>
+            <span style="font-weight:600;" data-cn="其他事項">AOB</span>
+            <p style="margin-top:4px; font-weight:600; color:#2c4a8f;" data-cn="吸引新客戶的方法：">Ways to attract new customers:</p>
+            <ul style="padding-left:20px;">
+              <li data-cn="推薦計劃">Referral scheme</li>
+              <li data-cn="現金券">Cash vouchers</li>
+            </ul>
+          </li>
+          <li data-cn="會議結束">Close the meeting</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB 2: POSSIBLE RESPONSE ============ -->
+  <div class="tab-content" id="tab-1">
+    <h1 data-cn="模擬回應">Possible Response</h1>
+    <p style="color:#666; margin-bottom:16px;" data-cn="建議的會議對話（完整答案）。每輪發言上方的「斜體藍字」列明溝通功能；「綠色標籤」解釋每輪發言中語言的使用。">
+      Suggested meeting conversation (full answer). Communicative functions are shown in the
+      <em>italic blue</em> line above each turn; <strong>green tags</strong> explain the use of
+      language in each turn.
+    </p>
+    <div class="legend">
+      <span class="lbl" data-cn="高亮顏色圖例">Highlight colour key</span>
+      <span class="chip m">Modal verb + bare infinitive</span>
+      <span class="chip c">Contraction</span>
+      <span class="chip h">Cohesive device</span>
+      <span class="chip g">Making suggestions</span>
+      <span class="chip r">Giving reasons</span>
+      <span class="chip n">1st conditional</span>
+    </div>
+    <p style="color:#666; margin:0 0 12px;" data-cn="將鼠標移到對話中任何高亮項目上，即可查看其解釋。">Hover over any <mark class="lang-hl m">highlighted item</mark> in the script to see its explanation.</p>
+    <div class="player-controls">
+      <button class="play-all-btn" onclick="playAll()">▶ Play All</button>
+      <button class="pause-btn" onclick="pausePlay()">⏸ Pause</button>
+      <button class="stop-btn" onclick="stopPlay()">⏹ Stop</button>
+      <span class="speed-label">Speed</span>
+      <select class="speed-select" onchange="setSpeed(this.value)">
+        <option value="0.75">0.75×</option>
+        <option value="1" selected>1×</option>
+        <option value="1.25">1.25×</option>
+        <option value="1.5">1.5×</option>
+      </select>
+    </div>
+    <div class="now-playing" id="nowPlaying">
+      <div class="now-playing-label">Now Playing</div>
+      <div class="now-playing-text" id="nowPlayingText">—</div>
+    </div>
+    <div id="dialogueBody"></div>
+
+    <h2 style="margin-top:30px;" data-cn="語言特點">Language Features</h2>
+    <p style="color:#666; margin-bottom:16px;" data-cn="對話中的綠色標籤顯示語言的運用解釋（情態動詞＋不定式、連接詞、縮寫、建議句式等）。✗ 標記錯誤形式（例如 can + bought），應為不定式（例如 can buy）。">
+      Green tags in the conversation show <strong>explanations of the use of language</strong>
+      (modal verbs + bare infinitive, cohesive devices, contractions, suggestion patterns, etc.).
+      A <span class="xv" style="font-weight:700;">✗</span> marks the <strong>incorrect</strong> form
+      (e.g. <em>can + bought</em>), which should be the bare infinitive (e.g. <em>can buy</em>).
+    </p>
+
+    <div class="feature-box">
+      <h3 data-cn="粗體字顯示的語言功能">Language functions in bold print</h3>
+      <p data-cn="溝通功能（例如提出建議、表示同意、提出理由）以每輪發言上方的「斜體藍字」顯示。">Communicative functions (e.g. making suggestions, showing agreement, giving reasons) are highlighted in the <strong>italic blue</strong> line above each speaker's turn.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3 data-cn="連接詞／轉接語">Cohesive devices / Linking words</h3>
+      <ul>
+        <li data-cn="此外／再者／（較舊）另外">Besides / Moreover / Furthermore (dated)</li>
+        <li data-cn="此外／另外">In addition / Additionally</li>
+        <li data-cn="因此／所以／故此／所以">Therefore / Thus / Hence / So</li>
+      </ul>
+    </div>
+
+    <div class="feature-box">
+      <h3 data-cn="縮寫">Contractions</h3>
+      <p data-cn="I'm（I am）／It'll（It will）／We've（We have）／Let's（Let us）／That's（That is）">I'm (I am) / It'll (It will) / We've (We have) / Let's (Let us) / That's (That is)</p>
+    </div>
+
+    <div class="feature-box">
+      <h3 data-cn="思考詞（語氣填充）">Thinking words (air fillers)</h3>
+      <p data-cn="Well… Ummm… uhhhh…">Well… Ummm… uhhhh…</p>
+    </div>
+
+    <div class="feature-box">
+      <h3 data-cn="情態動詞">Modal verbs</h3>
+      <ul>
+        <li data-cn="能力：can, could　可能性：may, might"><strong>Ability:</strong> can, could &nbsp; <strong>Possibility:</strong> may, might</li>
+        <li data-cn="許可：Can, May　責任：must, have to"><strong>Permission:</strong> Can, May &nbsp; <strong>Obligation:</strong> must, have to</li>
+        <li data-cn="禁止：Can't, Mustn't　提供：Will, Would"><strong>Prohibition:</strong> Can't, Mustn't &nbsp; <strong>Offers:</strong> Will, Would</li>
+        <li data-cn="建議：Shall, Should　請求：Could, Would"><strong>Suggestions:</strong> Shall, Should &nbsp; <strong>Requests:</strong> Could, Would</li>
+        <li data-cn="未來可能性：Will, Shall　過去可能性：Could have, Would have"><strong>Future Possibility:</strong> Will, Shall &nbsp; <strong>Past Probability:</strong> Could have, Would have</li>
+      </ul>
+      <p style="margin-top:6px;" data-cn="＋行動動詞（不定式）＋受詞（名詞子句），例如：Customers can buy our new drinks at a cheaper price.">+ action verb (bare infinitive) + object (noun clause), e.g. Customers can buy our new drinks at a cheaper price.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3 data-cn="提出建議（行動動詞：suggest + advise + recommend）">Making suggestions (action verbs: suggest + advise + recommend)</h3>
+      <p data-cn="I suggest / advise / recommend to watch a K-pop concert. ✗">I suggest / advise / recommend <s>to watch a K-pop concert</s>. &nbsp;✗</p>
+      <p data-cn="I suggest / advise / recommend watching a K-pop concert. ✓">I suggest / advise / recommend <strong>watching a K-pop concert</strong>. &nbsp;✓</p>
+      <p data-cn="I suggest / advise / recommend that you (should) watch a K-pop concert. ✓">I suggest / advise / recommend that you (should — British style) <strong>watch a K-pop concert</strong>. &nbsp;✓</p>
+      <p data-cn="How about buy instant noodles? ✗　How about buying instant noodles? ✓"><s>How about buy instant noodles?</s> &nbsp;✗ &nbsp;&nbsp; How about <strong>buying</strong> instant noodles? &nbsp;✓</p>
+    </div>
+
+    <div class="feature-box">
+      <h3 data-cn="句子結構">Sentence structures</h3>
+      <ul>
+        <li data-cn="因果：Since / Because / As + 主詞 + 動詞 + 受詞，主詞 + 動詞 + 受詞。"><strong>Cause &amp; effect:</strong> Since / Because / As + S + V + O, S + V + O.</li>
+        <li data-cn="But / However + 主詞 + 動詞 + 受詞。">But / However + S + V + O.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ TAB 3: VIDEO ============ -->
+  <div class="tab-content" id="tab-2">
+    <h1 data-cn="示範對話影片">Sample Conversation Video</h1>
+    <p style="color:#666; margin-bottom:16px;" data-cn="觀看一個關於擴展 Jolly Juicy 業務計劃的會議。">Watch a meeting about plans to expand the Jolly Juicy business.</p>
+    <div class="video-box">
+      <div class="video-placeholder" data-cn="影片即將推出">Video coming soon</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+
+var DIALOGUE = [
+  { sp: "A", fn: "Greetings \u00b7 Opening the meeting \u00b7 Attention seeking", t: "Hello, good morning, everyone. / Good morning, everyone. Welcome to today's meeting. Shall we start now?", f: "A1.mp3", cn: "各位，早晨好。歡迎出席今天的會議。我們現在開始好嗎？" },
+  { sp: "All", t: "Yes. / Sure. / Certainly. (more polite)", f: "ALL1.mp3", cn: "好。／當然可以。／好的。（更禮貌）" },
+  { sp: "B", t: "Does everyone have a copy of the agenda?", f: "B1.mp3", cn: "大家都有議程的副本嗎？" },
+  { sp: "All", t: "Yes. / We do. Thanks.", f: "ALL2.mp3", cn: "有。／我們有。謝謝。" },
+  { sp: "C", fn: "Purpose of the meeting", t: "Great! The purpose of today's meeting is / Today's meeting aims to discuss plans to expand our company's business.", f: "C1.mp3", cn: "很好！今天會議的目的是／今天的會議旨在討論擴展我們公司業務的計劃。" },
+  { sp: "D", fn: "Introducing the agenda", t: "We are going to cover three agenda items: new beverages on the drink list, tactics for publicising the new offer, and any other business that you would like to discuss.", hi: [ { m: "would like to discuss", l: "Modal verb + bare infinitive" } ], f: "D1.mp3", cn: "我們會涵蓋三個議程項目：飲品單上的新飲品、宣傳新優惠的策略，以及你們想討論的任何其他事項。" },
+  { sp: "B", fn: "Making suggestions + Giving reasons \u00b7 Since (S+V+O), S+V+O \u00b7 Cohesive device", t: "Well\u2026 let's begin by discussing the new beverages on the drink list. I suggest that we should offer vegetable drinks, such as tomato and beetroot juices. Since they are rich in vitamins, they can help people fight against diseases and stay healthy. What's more / Moreover / Besides, the bright red can attract children who do not usually like veggies.", hi: [ { m: "let's begin", l: "Contraction (Let us begin)" }, { m: "I suggest that we should offer", l: "Making suggestions (suggest + that clause)" }, { m: "Since they are rich in vitamins", l: "Giving reasons (cohesive device)" }, { m: "they can help", l: "Modal verb + bare infinitive" }, { m: "What's more", l: "Cohesive device" }, { m: "can attract", l: "Modal verb + bare infinitive" } ], f: "B2.mp3", cn: "好吧，我們先討論飲品單上的新飲品。我建議我們提供蔬菜飲品，例如番茄汁和紅菜頭汁。由於它們富含維他命，可以幫助人們對抗疾病、保持健康。而且，鮮紅色可以吸引那些通常不喜歡蔬菜的小朋友。" },
+  { sp: "D", fn: "Showing agreement \u00b7 Making suggestions \u00b7 Giving reasons \u00b7 Cohesive device \u00b7 Contraction", t: "I agree. Vegetable drinks would definitely be appealing to health-conscious people and vegetarians. In addition, why don't we offer ice-cream with our smoothies to cater to children's desires / demands? It'd be great / awesome for children to share the beverage with their parents. I believe that's a good (That's a good idea) / an excellent way to facilitate the bond between parents and their children. Also, there're many ice-cream flavours for children to choose from. Do you see my point?", hi: [ { m: "would definitely be appealing", l: "Modal verb + bare infinitive" }, { m: "In addition", l: "Cohesive device" }, { m: "why don't we offer", l: "Making suggestions (why don't we + V)" }, { m: "It'd", l: "Contraction (It would)" }, { m: "that's", l: "Contraction (That is)" }, { m: "Also", l: "Cohesive device" }, { m: "there're", l: "Contraction (There are)" } ], f: "D2.mp3", cn: "我同意。蔬菜飲品肯定會吸引注重健康的人和素食者。此外，我們何不把雪糕加入沙冰，以迎合小朋友的需求？小朋友和父母分享飲品會很開心。我相信這是促進親子關係的好方法。而且，有很多雪糕口味可供小朋友選擇。你們明白我的意思嗎？" },
+  { sp: "A", fn: "Showing disagreement subtly \u00b7 Making a counter-proposal \u00b7 Elaborating opinions \u00b7 Contraction", t: "Umm, I'm afraid I have reservations about this. Winter is approaching so it might not be a suitable time to add ice-cream to our drinks. Instead, I propose incorporating hot chocolate with marshmallows on the drink list. Most people wish to have something hot and sweet during wintertime. We can also make it a part of our Christmas promotion. I'm sure customers of all ages'll (ages will) welcome it.", hi: [ { m: "I'm", l: "Contraction (I am)" }, { m: "might not be", l: "Modal verb + bare infinitive" }, { m: "I propose incorporating", l: "Making suggestions (propose + V-ing)" }, { m: "We can also make", l: "Modal verb + bare infinitive" }, { m: "ages'll", l: "Contraction (ages will)" } ], f: "A2.mp3", cn: "嗯，恐怕我對此有所保留。冬天快到了，所以現在未必是加入雪糕的合適時機。相反，我建議把棉花糖熱朱古力加入飲品單。大多數人在冬天都想喝點熱的、甜的東西。我們也可以把它納入聖誕推廣活動。我肯定所有年齡的顧客都會歡迎它。" },
+  { sp: "C", fn: "Showing agreement \u00b7 Making comparisons \u00b7 Elaborating opinions \u00b7 Sharing your views", t: "That's a fantastic idea! I'd also prefer to add this chocolate drink to the drink list rather than offering ice-cream with our smoothies. Could we also include nut-based milk on the drink list? Nuts, like almonds and cashews, are popular snacks. People will love the special milk flavours. I reckon that they would help boost our sales.", hi: [ { m: "That's", l: "Contraction (That is)" }, { m: "I'd", l: "Contraction (I would)" }, { m: "Could we also include", l: "Modal verb + bare infinitive" }, { m: "would help boost", l: "Modal verb + bare infinitive" } ], f: "C2.mp3", cn: "這是個很好的主意！我也寧願把這種朱古力飲品加入飲品單，而不是把雪糕加入沙冰。我們也可以把堅果奶加入飲品單嗎？堅果（例如杏仁和腰果）是很受歡迎的小食。人們會喜歡這些特別的奶類口味。我認為它們有助提升我們的銷量。" },
+  { sp: "D", fn: "Showing disagreement \u00b7 Giving reasons \u00b7 Verb / noun collocation", t: "I hate to disagree, but I don't think nut-based milk would be a good option to expand our business. It will take too much time to blend the nuts. Moreover, the cost of purchasing nuts is considerably high, which may affect our profits.", hi: [ { m: "I don't think", l: "Contraction (do not)" }, { m: "would be", l: "Modal verb + bare infinitive" }, { m: "will take", l: "Modal verb + bare infinitive" }, { m: "Moreover", l: "Cohesive device" }, { m: "may affect", l: "Modal verb + bare infinitive" } ], f: "D3.mp3", cn: "我不想不同意，但我認為堅果奶未必是擴展業務的好選擇。攪拌堅果要花太多時間。而且，購買堅果的成本相當高，可能會影響我們的利潤。" },
+  { sp: "B", fn: "Drawing consensus \u00b7 Showing uncertainty", t: "Ok, so we've heard several suggestions now. Can we reach a decision about what new beverages we will add to our drink list? It seems like vegetable drinks and hot chocolate with marshmallows are the most popular recommendations. Can we all agree that we should present these options to the management team?", hi: [ { m: "we've heard", l: "Contraction (we have heard)" }, { m: "Can we reach", l: "Modal verb + bare infinitive" }, { m: "we should present", l: "Modal verb + bare infinitive" } ], f: "B3.mp3", cn: "好吧，我們已聽過幾個建議了。我們可以就加入飲品單的新飲品達成決定嗎？蔬菜飲品和棉花糖熱朱古力似乎是最受歡迎的建議。我們能否一致同意把這些選擇呈交管理團隊？" },
+  { sp: "All", t: "Sure. / We can. / Let's do that. / Certainly. / Yes / Why not!? / Can't be better!", f: "ALL3.mp3", cn: "好。／可以。／就那樣做吧。／當然可以。／好啊，為什麼不呢！／再好不過了！" },
+  { sp: "C", fn: "Switching topic \u00b7 Contraction", t: "Excellent! Let's move onto the second item.", hi: [ { m: "Let's", l: "Contraction (Let us)" } ], f: "C3.mp3", cn: "很好！我們繼續討論第二項議程。" },
+  { sp: "A", fn: "Inviting opinions", t: "What are your opinions on the tactics for promoting the new offer?", f: "A3.mp3", cn: "你們對宣傳新優惠的策略有何意見？" },
+  { sp: "C", fn: "Making suggestions \u00b7 Highlighting the benefit outcome / potential benefits", t: "How about inviting Alex Fong to be our spokesperson? He was a member of the Hong Kong swimming team and is currently a popular artist and singer. His positive image would do good to enhance the popularity of our brand.", hi: [ { m: "How about inviting", l: "Making suggestions (how about + V-ing)" }, { m: "would do good", l: "Modal verb + bare infinitive" } ], f: "C4.mp3", cn: "邀請方力申擔任我們的代言人如何？他曾是香港游泳隊成員，現時是受歡迎的藝人及歌手。他的正面形象有助提升我們品牌的知名度。" },
+  { sp: "B", fn: "Showing agreement \u00b7 Cohesive devices \u00b7 suggest + that clause (S+V+O)", t: "You're right. / Absolutely. Having him in our promotional campaign would bring us many new younger customers. In my opinion, online platforms will be a crucial tactic to promote the new offer. Apart from advertising it on our Facebook and Instagram pages, we could also write blogs regularly to highlight the positive feedback received from customers. In addition / Additionally, I suggest that we should set up promotional booths to promote our new drinks too.", hi: [ { m: "You're", l: "Contraction (You are)" }, { m: "would bring us", l: "Modal verb + bare infinitive" }, { m: "Apart from", l: "Cohesive device" }, { m: "we could also write", l: "Modal verb + bare infinitive" }, { m: "In addition", l: "Cohesive device" }, { m: "I suggest that we should set up", l: "Making suggestions (suggest + that clause)" } ], f: "B4.mp3", cn: "你說得對。／絕對同意。有他參與我們的宣傳活動，會為我們帶來很多新的年輕客戶。我認為網上平台會是宣傳新優惠的關鍵策略。除了在我們的 Facebook 和 Instagram 專頁宣傳外，我們也可以定期撰寫網誌，突出客戶收到的正面評價。此外／另外，我建議我們設立宣傳攤位來推廣我們的新飲品。" },
+  { sp: "D", fn: "Showing agreement \u00b7 Giving explanations \u00b7 Sharing thoughts \u00b7 Giving reasons", t: "Excellent! Perhaps we could set up such booths at the harbourfront of Tsim Sha Tsui. It is a popular place for both locals and tourists at the weekends. My (own) feeling is that thousands of potential customers would be there because they would fancy our newly offered drinks when they were bored with having fruit juices.", hi: [ { m: "could set up", l: "Modal verb + bare infinitive" }, { m: "would be there", l: "Modal verb + bare infinitive" }, { m: "because they would fancy", l: "Giving reasons (cohesive device)" } ], f: "D4.mp3", cn: "很好！也許我們可以在尖沙咀海濱設立這類攤位。那裏週末深受本地居民和遊客歡迎。我的想法是，成千上萬的潛在客戶會到那裏，因為他們會喜歡我們新推出的飲品，總好過喝水果汁。" },
+  { sp: "All", t: "Sure. / Exactly. / Wonderful. / Can't be better!", f: "ALL4.mp3", cn: "好。／正是。／太好了。／再好不過了！" },
+  { sp: "C", fn: "Making suggestions", t: "I have another suggestion. How about offering / if we offer free trials? Anything offered free is always a good way to attract customers. We could use small plastic cups for the trial.", hi: [ { m: "How about offering", l: "Making suggestions (how about + V-ing)" }, { m: "could use", l: "Modal verb + bare infinitive" } ], f: "C5.mp3", cn: "我有另一個建議。提供免費試飲如何？任何免費提供的東西都是吸引顧客的好方法。我們可以用小膠杯進行試飲。" },
+  { sp: "D", fn: "Showing reservation \u2192 making suggestions \u00b7 Cohesive device", t: "That's a possibility, but plastic waste will cause much harm to the environment. What about using paper cups instead? This way, we can achieve the same promotional effect while protecting the environment. Also, we have some paper cups in stock from our previous promotion. Thus, we can reduce our promotional cost and promote eco-friendliness.", hi: [ { m: "That's", l: "Contraction (That is)" }, { m: "will cause", l: "Modal verb + bare infinitive" }, { m: "What about using", l: "Making suggestions (what about + V-ing)" }, { m: "we can achieve", l: "Modal verb + bare infinitive" }, { m: "Also", l: "Cohesive device" }, { m: "Thus", l: "Cohesive device" }, { m: "we can reduce", l: "Modal verb + bare infinitive" } ], f: "D5.mp3", cn: "這是有可能的，但膠杯廢物會對環境造成很大傷害。改用紙杯如何？這樣，我們可以在保護環境的同時達到相同的宣傳效果。而且，我們上次宣傳活動還有一些紙杯存貨。因此，我們可以減低宣傳成本，同時提倡環保。" },
+  { sp: "A", fn: "Showing reservation \u00b7 Giving explanations", t: "I see what you mean, but I think we need to make a request to management for an extra budget if we offer free trials. This promotional means may not be able to increase our sales income.", hi: [ { m: "may not be able to", l: "Modal verb + bare infinitive" } ], f: "A4.mp3", cn: "我明白你的意思，但我認為如果我們提供免費試飲，需要向管理層申請額外預算。這種宣傳方式可能無法增加我們的銷售收入。" },
+  { sp: "B", fn: "Drawing consensus \u00b7 Modal verb + bare infinitive", t: "Do we have a consensus on the promotion tactics then? Shall we all agree that we set up promotional booths at the harbourfront of Tsim Sha Tsui?", hi: [ { m: "Shall we all agree", l: "Modal verb + bare infinitive" } ], f: "B5.mp3", cn: "那麼我們對宣傳策略有共識嗎？我們是否一致同意在尖沙咀海濱設立宣傳攤位？" },
+  { sp: "All", t: "Yes. / Sure.", f: "ALL5.mp3", cn: "好。／當然可以。" },
+  { sp: "A", fn: "Drawing consensus", t: "And do we all agree to invite Alex Fong to be our spokesperson too?", f: "A5.mp3", cn: "我們也一致同意邀請方力申擔任我們的代言人嗎？" },
+  { sp: "All", t: "Yes.", f: "ALL6.mp3", cn: "好。" },
+  { sp: "B", fn: "Switching topic \u2192 next agenda item", t: "Fantastic! Does anyone have any other business that you would like to discuss?", hi: [ { m: "would like to discuss", l: "Modal verb + bare infinitive" } ], f: "B6.mp3", cn: "太好了！大家有沒有其他事項想討論？" },
+  { sp: "D", fn: "Initiating the discussion \u00b7 Making suggestions \u00b7 S + suggest + that clause (S+V+O) \u00b7 Giving a condition \u00b7 Inviting opinions", t: "Yes. I would like to discuss ways to attract new customers. With respect to / Regarding / Concerning the referral scheme, I suggest that our existing \u201cJuicy members\u201d could enjoy a buy-one-get-one-free drink upon their next purchase if they refer their relatives and friends to be our members. Do you have any opinions on that?", hi: [ { m: "I would like to discuss", l: "Modal verb + bare infinitive" }, { m: "With respect to", l: "Cohesive device" }, { m: "I suggest that our existing", l: "Making suggestions (suggest + that clause)" }, { m: "could enjoy", l: "Modal verb + bare infinitive" }, { m: "if they refer", l: "Giving a condition (1st conditional)" } ], f: "D6.mp3", cn: "有。我想討論吸引新客戶的方法。關於推薦計劃，我建議我們現有的「Juicy會員」如果推薦親友成為會員，可以在下次購買時享受買一送一優惠。你們對此有何意見？" },
+  { sp: "C", fn: "Making a counter-offer \u00b7 Giving explanations & highlighting potential benefits", t: "Your idea is brilliant / sensible, but I would recommend extending this offer to the referrers and referees rather than the referrers only. By doing so, people would be more attracted to be our new members. More importantly, these new members would make further referrals so that we could widen our customer base more speedily.", hi: [ { m: "I would recommend extending", l: "Making suggestions (recommend + V-ing)" }, { m: "would be more attracted", l: "Modal verb + bare infinitive" }, { m: "would make further referrals", l: "Modal verb + bare infinitive" }, { m: "we could widen", l: "Modal verb + bare infinitive" } ], f: "C6.mp3", cn: "你的想法很出色，但我會建議把這項優惠同時擴展到推薦人和被推薦人，而不只是推薦人。這樣做，人們會更願意成為我們的新會員。更重要的是，這些新會員會繼續推薦，讓我們能更快擴大客戶群。" },
+  { sp: "A", fn: "Showing agreement \u00b7 Drawing consensus", t: "Yes, concerning / regarding the referral scheme, launching a buy-one-get-one-free offer is a good suggestion. Do we all agree?", f: "A6.mp3", cn: "是的，關於推薦計劃，推行買一送一優惠是個好建議。我們都同意嗎？" },
+  { sp: "All", t: "Yes. / Sure. / Fantastic. / Awesome / Fabulous.", f: "ALL7.mp3", cn: "好。／當然可以。／太好了。／很棒。" },
+  { sp: "B", fn: "Giving suggestions \u00b7 Giving a condition (1st conditional)", t: "How about giving out cash vouchers to new customers? According to some feedback on online platforms, our drinks are, on average, more expensive than our competitors. If customers receive cash vouchers upon their purchases, say, $5 for each drink, it will enable more potential customers to choose us.", hi: [ { m: "How about giving out", l: "Making suggestions (how about + V-ing)" }, { m: "If customers receive", l: "Giving a condition (1st conditional)" }, { m: "it will enable", l: "Modal verb + bare infinitive" } ], f: "B7.mp3", cn: "向新客戶派發現金券如何？根據網上平台的一些意見，我們的飲品平均比競爭對手昂貴。如果顧客在購買時收到現金券，例如每杯飲品五元，這會讓更多潛在客戶選擇我們。" },
+  { sp: "D", fn: "Showing agreement \u00b7 Giving an example", t: "I can't agree with you more. Also, most people do not like paper vouchers, which can be lost or damaged easily. We should send e-vouchers to the customers. They could be in the form of QR codes in SMS. It's also more convenient for our cashier staff.", hi: [ { m: "I can't", l: "Contraction (cannot)" }, { m: "Also", l: "Cohesive device" }, { m: "can be lost", l: "Modal verb + bare infinitive" }, { m: "We should send", l: "Modal verb + bare infinitive" }, { m: "could be", l: "Modal verb + bare infinitive" }, { m: "It's", l: "Contraction (It is)" } ], f: "D7.mp3", cn: "我非常同意。而且，大多數人不喜歡紙質券，因為它們容易遺失或損壞。我們應該向顧客發送電子券。它們可以是 SMS 中的 QR 碼形式。對我們的收銀員來說也更方便。" },
+  { sp: "C", fn: "Showing agreement \u00b7 Inviting opinions", t: "Okay. Let us present this idea to the management as well. Do we have any other suggestions?", hi: [ { m: "Let us", l: "Contraction (Let us)" } ], f: "C7.mp3", cn: "好的。讓我們也把這個想法呈交管理層。我們還有其他建議嗎？" },
+  { sp: "All", t: "No. / I don't. / Not right now.", f: "ALL8.mp3", cn: "沒有。／我沒有。／暫時沒有。" },
+  { sp: "A", fn: "Making a summary", t: "So, we have decided to launch a buy-one-get-one-free offer, and we are going to give away e-vouchers to new customers to boost our sales and widen our customer base.", f: "A7.mp3", cn: "那麼，我們已決定推行買一送一優惠，並會向新客戶派發電子券，以提升銷量並擴大我們的客戶群。" },
+  { sp: "D", fn: "Contraction", t: "Well, I think that's all we have for today. We've (have) truly proposed some great ideas to be presented to the management. Does anybody have anything else to add?", hi: [ { m: "that's", l: "Contraction (That is)" }, { m: "We've", l: "Contraction (We have)" } ], f: "D8.mp3", cn: "好吧，我想今天我們要討論的就是這些。我們確實提出了一些很好的主意，準備呈交管理層。各位有沒有其他補充？" },
+  { sp: "All", t: "No. / I don't. / Not right now. / Not for me / Not for this moment.", f: "ALL9.mp3", cn: "沒有。／我沒有。／暫時沒有。／我不需要。／這一刻沒有。" },
+  { sp: "B", fn: "Closing the meeting", t: "Well, if not, I think we can finish here. Thank you / Thanks very much for attending the meeting and contributing your ideas, everybody / Thanks for being with me this morning / Thanks for coming / Cheers.", hi: [ { m: "can finish", l: "Modal verb + bare infinitive" } ], f: "B8.mp3", cn: "好吧，如果沒有，我想我們可以到此結束。非常感謝各位出席會議並貢獻意見。" }
+];
+
+function renderDialogue() {
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function colorOf(label) {
+    if (/contraction/i.test(label)) return 'c';
+    if (/modal/i.test(label)) return 'm';
+    if (/suggest|propose|recommend|how about|what about/i.test(label)) return 'g';
+    if (/cohesive/i.test(label)) return 'h';
+    if (/conditional/i.test(label)) return 'n';
+    if (/reason/i.test(label)) return 'r';
+    return 'm';
+  }
+  var html = '<table class="dialogue-table"><thead><tr>'
+    + '<th>Student</th><th>Conversation (language items highlighted)</th><th>Language explanations</th><th>Communicative functions</th>'
+    + '</tr></thead><tbody>';
+  DIALOGUE.forEach(function(ut) {
+    var text = ut.t, spans = [];
+    (ut.hi || []).forEach(function(h) {
+      var idx = text.indexOf(h.m);
+      if (idx >= 0) spans.push({ s: idx, e: idx + h.m.length, l: h.l });
+    });
+    spans.sort(function(a, b) { return a.s - b.s; });
+    var clean = [], last = -1;
+    spans.forEach(function(sp) { if (sp.s >= last) { clean.push(sp); last = sp.e; } });
+    var hl = '', pos = 0;
+    clean.forEach(function(sp) {
+      hl += esc(text.substring(pos, sp.s))
+        + '<mark class="lang-hl ' + colorOf(sp.l) + '" title="' + esc(sp.l) + '">'
+        + esc(text.substring(sp.s, sp.e)) + '</mark>';
+      pos = sp.e;
+    });
+    hl += esc(text.substring(pos));
+    var exps = [];
+    (ut.hi || []).forEach(function(h) { exps.push('<span class="exp-item">' + esc(h.l) + '</span>'); });
+    var role = ut.sp === 'All' ? 'ALL' : ut.sp;
+    var label = role;
+    var btn = '<button class="speaker-btn role-' + role + '" onclick="play(\'' + ut.f + '\', this)" title="Play">'
+      + label + '<div class="audio-pulse"></div></button>';
+    html += '<tr class="script-row" data-file="' + ut.f + '">'
+      + '<td class="c-stu">' + btn + '</td>'
+      + '<td class="c-script"><span class="script-text" data-cn="' + esc(ut.cn || '') + '">' + hl + '</span></td>'
+      + '<td class="c-exp">' + (exps.length ? exps.join(' ') : '<span class="muted">&mdash;</span>') + '</td>'
+      + '<td class="c-fn">' + (ut.fn ? esc(ut.fn) : '<span class="muted">&mdash;</span>') + '</td>'
+      + '</tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('dialogueBody').innerHTML = html;
+}
+
+window.switchTab = function(i) {
+  var contents = document.querySelectorAll('.tab-content');
+  var buttons = document.querySelectorAll('.tab-btn');
+  contents.forEach(function(c) { c.classList.remove('active'); });
+  buttons.forEach(function(b) { b.classList.remove('active'); });
+  contents[i].classList.add('active');
+  buttons[i].classList.add('active');
+};
+
+// ---- Audio player ----
+var currentAudio = null;
+var currentBtn = null;
+var playAllTimer = null;
+var speed = 1;
+
+function getAllBtns() {
+  return Array.prototype.slice.call(document.querySelectorAll('.speaker-btn'));
+}
+
+function clearRowActive() {
+  document.querySelectorAll('.script-row.active').forEach(function(r) { r.classList.remove('active'); });
+}
+
+function clearNowPlaying() {
+  var np = document.getElementById('nowPlaying');
+  np.classList.remove('active');
+  document.getElementById('nowPlayingText').textContent = '\u2014';
+}
+
+function clearWordTrack() {
+  document.querySelectorAll('.word-wrap .word.active').forEach(function(w) { w.classList.remove('active'); });
+  document.querySelectorAll('.script-text[data-orig-html]').forEach(function(el) {
+    el.innerHTML = el.dataset.origHtml;
+    delete el.dataset.origHtml;
+  });
+}
+
+function startWordTrack(btn, audio) {
+  var row = btn.closest('.script-row');
+  if (!row) return;
+  var textEl = row.querySelector('.script-text');
+  if (!textEl) return;
+
+  textEl.dataset.origHtml = textEl.innerHTML;
+  var text = textEl.textContent.trim();
+  var words = text.split(/\s+/);
+  var wordWrap = document.createElement('span');
+  wordWrap.className = 'word-wrap';
+  wordWrap.innerHTML = words.map(function(w) { return '<span class="word">' + w + '</span>'; }).join(' ');
+  textEl.innerHTML = '';
+  textEl.appendChild(wordWrap);
+  var wordSpans = textEl.querySelectorAll('.word');
+
+  var lastIdx = -1;
+  var handler = function() {
+    var dur = audio.duration;
+    if (!dur || isNaN(dur)) return;
+    var pct = audio.currentTime / dur;
+    var idx = Math.min(Math.floor(pct * words.length), words.length - 1);
+    if (idx !== lastIdx) {
+      if (lastIdx >= 0) wordSpans[lastIdx].classList.remove('active');
+      wordSpans[idx].classList.add('active');
+      lastIdx = idx;
+    }
+  };
+  audio.addEventListener('timeupdate', handler);
+  audio.addEventListener('ended', function() {
+    audio.removeEventListener('timeupdate', handler);
+    if (textEl.dataset.origHtml !== undefined) {
+      textEl.innerHTML = textEl.dataset.origHtml;
+      delete textEl.dataset.origHtml;
+    }
+  }, { once: true });
+}
+
+function setNowPlaying(btn) {
+  var row = btn.closest('.script-row');
+  if (!row) return;
+  document.querySelectorAll('.script-row.active').forEach(function(r) { r.classList.remove('active'); });
+  row.classList.add('active');
+  row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  var textEl = row.querySelector('.script-text');
+  if (textEl) {
+    var np = document.getElementById('nowPlaying');
+    var npText = document.getElementById('nowPlayingText');
+    npText.textContent = textEl.textContent.trim();
+    np.classList.add('active');
+  }
+}
+
+function stopCurrentAudio() {
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    currentAudio = null;
+  }
+  if (currentBtn) { currentBtn.classList.remove('playing'); currentBtn = null; }
+}
+
+window.play = function(file, btn) {
+  stopCurrentAudio();
+  clearPlayAll();
+
+  var audio = new Audio('audio/' + file);
+  audio.playbackRate = speed;
+  currentAudio = audio;
+  currentBtn = btn;
+  btn.classList.add('playing');
+  setNowPlaying(btn);
+  startWordTrack(btn, audio);
+  audio.play().catch(function(e) {
+    console.warn('Audio not found: audio/' + file);
+    btn.classList.remove('playing');
+    clearNowPlaying();
+    clearWordTrack();
+  });
+  audio.addEventListener('ended', function() {
+    btn.classList.remove('playing');
+    clearRowActive();
+    clearNowPlaying();
+    clearWordTrack();
+    currentBtn = null;
+    currentAudio = null;
+  });
+};
+
+window.playAll = function() {
+  var btns = getAllBtns();
+  var idx = 0;
+
+  function playNext() {
+    if (idx >= btns.length) {
+      currentBtn = null;
+      return;
+    }
+    var btn = btns[idx];
+    var row = btn.closest('.script-row');
+    var file = row ? row.getAttribute('data-file') : null;
+    if (!file) { idx++; playNext(); return; }
+
+    stopCurrentAudio();
+    var audio = new Audio('audio/' + file);
+    audio.playbackRate = speed;
+    currentAudio = audio;
+    currentBtn = btn;
+    btn.classList.add('playing');
+    setNowPlaying(btn);
+    startWordTrack(btn, audio);
+
+    audio.play().catch(function(e) {
+      btn.classList.remove('playing');
+      idx++;
+      playNext();
+      return;
+    });
+    audio.addEventListener('ended', function() {
+      btn.classList.remove('playing');
+      clearRowActive();
+      clearWordTrack();
+      idx++;
+      playAllTimer = setTimeout(function() {
+        clearNowPlaying();
+        playNext();
+      }, 600);
+    });
+  }
+  clearPlayAll();
+  playNext();
+};
+
+function clearPlayAll() {
+  if (playAllTimer) {
+    clearTimeout(playAllTimer);
+    playAllTimer = null;
+  }
+}
+
+window.pausePlay = function() {
+  if (currentAudio && !currentAudio.paused) {
+    currentAudio.pause();
+    if (currentBtn) currentBtn.classList.remove('playing');
+  }
+  clearPlayAll();
+};
+
+window.stopPlay = function() {
+  stopCurrentAudio();
+  clearPlayAll();
+  clearRowActive();
+  clearWordTrack();
+  clearNowPlaying();
+};
+
+window.setSpeed = function(val) {
+  speed = parseFloat(val);
+  if (currentAudio) currentAudio.playbackRate = speed;
+};
+
+window.toggleAllCN = function(show) {
+  document.querySelector('.container').classList.toggle('cn-active', show);
+};
+
+function initTranslations() {
+  document.querySelectorAll('.tab-content [data-cn]').forEach(function(el) {
+    if (el.dataset.cnProcessed) return;
+    el.dataset.cnProcessed = '1';
+    var trans = document.createElement('div');
+    trans.className = 'cn-translation';
+    trans.textContent = el.dataset.cn;
+    el.after(trans);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  renderDialogue();
+  initTranslations();
+});
+
+})();
+</script>
+
+</body>
+</html>
